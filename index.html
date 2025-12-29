@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <meta charset="UTF-8">
+  <title>KORMI - Trusted Technicians</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Hind Siliguri", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f8fb;
+      color: #1f2937;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: #f6f8fb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 20px;
+      color: #1e3a8a;
+    }
+
+    .check {
+      background: #1e3a8a;
+      color: white;
+      padding: 4px 6px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+/* =========== Desktop nav ===========*/
+    .nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav a:not(#login-btn) {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 600;
+      padding: 10px 18px;
+      background: #e8edff;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .nav a:not(#login-btn):first-child {
+      border-radius: 12px 0 0 12px;
+    }
+
+    .nav a:not(#login-btn):nth-child(4) {
+      border-radius: 0 12px 12px 0;
+    }
+
+    .nav a:not(#login-btn):hover {
+      background: #1e3a8a;
+      color: #ffffff;
+    }
+
+    #login-btn {
+      margin-left: 30px;
+      background-color: #1e3a8a;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+    }
+    #login-btn:hover{
+      background-color: #0336c3;
+      transition: 0.3s;
+    }
+/* ========== mobile nav =========== */
+    .menu {
+      font-size: 26px;
+      cursor: pointer;
+      display: none;
+      color: #1e3a8a;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: #fff;
+      padding: 20px;
+      box-shadow: -6px 0 20px rgba(0, 0, 0, .15);
+      transition: right .35s ease;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-nav.active {
+      right: 0;
+    }
+
+    .mobile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .close-btn {
+      font-size: 26px;
+      cursor: pointer;
+      color: #1e3a8a;
+    }
+
+    .mobile-links a {
+      display: block;
+      text-decoration: none;
+      font-size: 18px;
+      color: #1e3a8a;
+      font-weight: 600;
+      padding: 14px 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #f1f5ff;
+    }
+
+    .mobile-links a:hover {
+      background: #1e3a8a;
+      color: white;
+    }
+
+    .mobile-login {
+      margin-top: auto;
+    }
+
+    .mobile-login a {
+      display: block;
+      text-align: center;
+      background: #1e3a8a;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 18px;
+      text-decoration: none;
+    }
+    .mobile-login a:hover{
+      background-color: #0336c3;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .search-box {
+      display: flex;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+    }
+
+    .search-box input:focus {
+      outline: none;
+    }
+
+    .search-box button {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 0 22px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .search-box button:hover{
+      background-color: #0336c3;
+    }
+
+    /* ================= CATEGORIES ================= */
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .category {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 10px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+    }
+
+    .category .icon {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* ================= TRUST ================= */
+
+    .trust {
+      background: white;
+      margin: 20px;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 12px;
+    }
+
+    .green {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .yellow {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .red {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+      padding: 20px;
+    }
+
+    .cta button {
+      width: 100%;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* ================= ACCESSIBILITY ================= */
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+      }
+
+      .menu {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <span class="check">✔</span>
+      <span>KORMI</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#">Home</a>
+      <a href="#">Services</a>
+      <a href="#">Find Technician</a>
+      <a href="#">Become a Technician</a>
+      <a href="login.html" id="login-btn">Login</a>
+    </nav>
+
+    <div class="menu" id="menuToggle">☰</div>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+
+  <nav class="mobile-nav" id="mobileMenu">
+    <div class="mobile-header">
+      <strong>KORMI</strong>
+      <span class="close-btn" id="closeMenu">✕</span>
+    </div>
+
+    <div class="mobile-links">
+      <a href="#">Home</a>
+      <a href="#">Services</a>
+      <a href="#">Find Technician</a>
+      <a href="#">Become a Technician</a>
+    </div>
+
+    <div class="mobile-login">
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>বিশ্বাসযোগ্য মিস্ত্রি খুঁজুন<br>আপনার এলাকার!</h1>
+    <div class="search-box">
+      <label class="sr-only" for="areaInput">Your area</label>
+      <input id="areaInput" type="text" placeholder="Your area">
+      <button onclick="searchArea()">খুঁজুন</button>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="category"><span class="icon">⚡</span>
+      <p>Electrician</p>
+    </div>
+    <div class="category"><span class="icon">🚰</span>
+      <p>Plumber</p>
+    </div>
+    <div class="category"><span class="icon">❄️</span>
+      <p>AC Repair</p>
+    </div>
+    <div class="category"><span class="icon">🔥</span>
+      <p>Gas Technician</p>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="trust-item"><span class="trust-icon green">✔</span>
+      <div>
+        <h3>Verified technicians</h3>
+        <p>All technicians have been verified</p>
+      </div>
+    </div>
+    <div class="trust-item"><span class="trust-icon yellow">★</span>
+      <div>
+        <h3>Real customer reviews</h3>
+        <p>Read reviews from real customers</p>
+      </div>
+    </div>
+    <div class="trust-item"><span class="trust-icon red">🚫</span>
+      <div>
+        <h3>No middleman hassle</h3>
+        <p>Book directly with technicians</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <button>সব ভেরিফায়েড মিস্ত্রি দেখুন</button>
+  </section>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const overlay = document.getElementById("overlay");
+    const closeMenu = document.getElementById("closeMenu");
+
+    function openMenu() {
+      mobileMenu.classList.add("active");
+      overlay.classList.add("active");
+    }
+
+    function closeMenuFn() {
+      mobileMenu.classList.remove("active");
+      overlay.classList.remove("active");
+    }
+
+    menuToggle.addEventListener("click", openMenu);
+    closeMenu.addEventListener("click", closeMenuFn);
+    overlay.addEventListener("click", closeMenuFn);
+
+    function searchArea() {
+      const area = document.getElementById("areaInput").value.trim();
+      if (!area) {
+        alert("অনুগ্রহ করে আপনার এলাকা লিখুন");
+        return;
+      }
+      alert("Searching technicians in: " + area);
+    }
+  </script>
+
+</body>
+
+</html>

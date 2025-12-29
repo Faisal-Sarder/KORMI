@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins, sans-serif
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, .2);
+            display: none;
+        }
+
+        .container.active {
+            display: block
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.6rem
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%)
+        }
+
+        .input-group .toggle {
+            right: 0;
+            left: auto;
+            cursor: pointer
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 30px;
+            border: none;
+            border-bottom: 1px solid #999;
+            outline: none;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 30px;
+            top: 10px;
+            color: #999;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        .input-group input:focus,
+        .input-group input:not(:placeholder-shown) {
+            border-bottom: 2px solid #a1005b;
+        }
+
+        .input-group input:focus~label,
+        .input-group input:not(:placeholder-shown)~label {
+            top: -10px;
+            font-size: 12px;
+            color: #a1005b;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn {
+            font-size: 1rem;
+            font-weight: 800;
+            width: 100%;
+            padding: 10px;
+            background-color: #1e3a8a;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn:hover {
+            font-size: 1.2rem;
+            background-color: #0336c3;
+        }
+
+        #showSignIn {
+            font-size: 1rem;
+        }
+        #showSignIn:hover {
+            font-size: 1.2rem;
+            transition: .3s;
+        }
+
+        #showSignUp {
+            font-size: 1rem;
+        }
+        #showSignUp:hover {
+            font-size: 1.2rem;
+            transition: .3s;
+        }
+        .remember {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .remember input {
+            margin-right: 6px
+        }
+
+        .forget {
+            text-align: right;
+            margin-bottom: 1rem
+        }
+
+        .forget button {
+            background: none;
+            border: none;
+            color: rgb(125, 125, 235);
+            cursor: pointer;
+        }
+        .forget button:hover {
+            font-size: 0.8rem;
+            text-decoration: underline;
+            transition: 0.3s;
+        }
+
+        .or {
+            text-align: center;
+            margin: 1rem 0;
+            color: #777
+        }
+
+        .icons {
+            text-align: center
+        }
+
+        .icons i {
+            font-size: 1.6rem;
+            margin: 0 10px;
+            padding: 5px;
+            border: 2px solid #dfe9f5;
+            border-radius: 10px;
+            color: rgb(125, 125, 235);
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .icons i:hover {
+            font-size: 2rem;
+            background: #07001f;
+            color: #fff;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1rem
+        }
+
+        .links button {
+            background: none;
+            border: none;
+            color: rgb(125, 125, 235);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex
+        }
+
+        .modal-box {
+            background: #fff;
+            padding: 2rem;
+            max-width: 350px;
+            width: 100%;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: red;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        @media(max-width:480px) {
+            .container {
+                padding: 1.5rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIGN IN -->
+    <div class="container active" id="signIn">
+        <h1 class="form-title">Sign In</h1>
+
+        <form id="signInForm">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="loginId" placeholder=" " />
+                <label>Email or Phone</label>
+                <div class="error"></div>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPass" placeholder=" " />
+                <i class="fas fa-eye toggle"></i>
+                <label>Password</label>
+                <div class="error"></div>
+            </div>
+
+            <div class="remember">
+                <input type="checkbox" id="rememberMe"> Remember Me
+            </div>
+
+            <div class="forget">
+                <button type="button" id="forgotBtn">Forgot Password?</button>
+            </div>
+
+            <button class="btn">Sign In</button>
+        </form>
+
+        <p class="or">— or —</p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook-f"></i>
+        </div>
+
+        <div class="links">
+            Don't have an account?
+            <button type="button" id="showSignUp">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- SIGN UP -->
+    <div class="container" id="signUp">
+        <h1 class="form-title">Sign Up</h1>
+
+        <form id="signUpForm">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder=" " required>
+                <label>First Name</label>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder=" " required>
+                <label>Last Name</label>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="regId" placeholder=" ">
+                <label>Email or Phone</label>
+                <div class="error"></div>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="regPass" placeholder=" ">
+                <i class="fas fa-eye toggle"></i>
+                <label>Password</label>
+                <div class="error"></div>
+            </div>
+
+            <button class="btn">Create Account</button>
+        </form>
+
+        <p class="or">— or —</p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook-f"></i>
+        </div>
+
+        <div class="links">
+            Already have an account?
+            <button type="button" id="showSignIn">Sign In</button>
+        </div>
+    </div>
+
+    <!-- FORGOT MODAL -->
+    <div class="modal" id="forgotModal">
+        <div class="modal-box">
+            <h3>Forgot Password</h3>
+            <p>Enter your email or phone</p>
+
+            <div class="input-group">
+                <input type="text" id="forgotInput" placeholder=" ">
+                <label>Email or Phone</label>
+                <div class="error"></div>
+            </div>
+
+            <button class="btn">Send Reset Link</button>
+            <button class="close-btn" id="closeModal">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        const signIn = document.getElementById("signIn");
+        const signUp = document.getElementById("signUp");
+        const modal = document.getElementById("forgotModal");
+        const showSignUp = document.getElementById("showSignUp");
+        const showSignIn = document.getElementById("showSignIn");
+        const forgotBtn = document.getElementById("forgotBtn");
+        const closeModal = document.getElementById("closeModal");
+        const loginId = document.getElementById("loginId");
+        const loginPass = document.getElementById("loginPass");
+        const regId = document.getElementById("regId");
+        const regPass = document.getElementById("regPass");
+        const rememberMe = document.getElementById("rememberMe");
+
+        // Show/Hide Forms
+        showSignUp.onclick = () => { signIn.classList.remove("active"); signUp.classList.add("active") }
+        showSignIn.onclick = () => { signUp.classList.remove("active"); signIn.classList.add("active") }
+
+        // Modal
+        forgotBtn.onclick = () => modal.classList.add("active")
+        closeModal.onclick = () => modal.classList.remove("active")
+
+        // Toggle Password
+        document.querySelectorAll(".toggle").forEach(t => {
+            t.onclick = () => {
+                const inp = t.previousElementSibling;
+                inp.type = inp.type === "password" ? "text" : "password";
+                t.classList.toggle("fa-eye-slash");
+            }
+        });
+
+        // Email or Phone Check (Bangladesh format supported)
+        function isEmailOrPhone(v) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phonePattern = /^(?:\+8801|01)[0-9]{9}$/;
+            return emailPattern.test(v) || phonePattern.test(v);
+        }
+
+        // Strong password: min 8 chars, upper, lower, number
+        function strongPass(p) {
+            return p.length >= 8 && /[A-Z]/.test(p) && /[a-z]/.test(p) && /\d/.test(p);
+        }
+
+        // Autofill Remembered User
+        window.onload = () => {
+            if (localStorage.getItem("remember")) {
+                loginId.value = localStorage.getItem("remember");
+                rememberMe.checked = true;
+            }
+        }
+
+        // Sign In Validation
+        document.getElementById("signInForm").onsubmit = e => {
+            e.preventDefault();
+            let id = loginId.value.trim();
+            let pass = loginPass.value;
+            let errors = document.querySelectorAll("#signInForm .error");
+            errors.forEach(er => er.style.display = "none");
+
+            let ok = true;
+            if (!id) { errors[0].innerText = "This field is required"; errors[0].style.display = "block"; ok = false; }
+            else if (!isEmailOrPhone(id)) { errors[0].innerText = "Invalid email or phone"; errors[0].style.display = "block"; ok = false; }
+            if (!pass) { errors[1].innerText = "This field is required"; errors[1].style.display = "block"; ok = false; }
+            else if (!strongPass(pass)) { errors[1].innerText = "Password must be strong (8+, A-z, 0-9)"; errors[1].style.display = "block"; ok = false; }
+
+            if (ok && rememberMe.checked) { localStorage.setItem("remember", id); }
+            else if (!rememberMe.checked) { localStorage.removeItem("remember"); }
+        }
+
+        // Sign Up Validation
+        document.getElementById("signUpForm").onsubmit = e => {
+            e.preventDefault();
+            let id = regId.value.trim();
+            let pass = regPass.value;
+            let errors = document.querySelectorAll("#signUpForm .error");
+            errors.forEach(er => er.style.display = "none");
+
+            let ok = true;
+            if (!id) { errors[0].innerText = "This field is required"; errors[0].style.display = "block"; ok = false; }
+            else if (!isEmailOrPhone(id)) { errors[0].innerText = "Invalid email or phone"; errors[0].style.display = "block"; ok = false; }
+            if (!pass) { errors[1].innerText = "This field is required"; errors[1].style.display = "block"; ok = false; }
+            else if (!strongPass(pass)) { errors[1].innerText = "Password must be strong (8+, A-z, 0-9)"; errors[1].style.display = "block"; ok = false; }
+        }
+    </script>
+
+</body>
+
+</html>
