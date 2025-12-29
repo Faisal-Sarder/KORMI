@@ -2,11 +2,11 @@
 <html lang="bn">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KORMI</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     * {
@@ -24,13 +24,13 @@
 
     .header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 16px 20px;
       background: #f6f8fb;
       position: sticky;
       top: 0;
       z-index: 1000;
+      gap: 16px;
     }
 
     .logo {
@@ -39,6 +39,7 @@
       font-weight: 700;
       font-size: 20px;
       color: #1e3a8a;
+      white-space: nowrap;
     }
 
     .check {
@@ -48,13 +49,16 @@
       border-radius: 6px;
       margin-right: 8px;
     }
-/* =========== Desktop nav ===========*/
+
+    /* =========== Desktop nav =========== */
+
     .nav {
       display: flex;
       align-items: center;
+      margin-left: auto;
     }
 
-    .nav a:not(#login-btn) {
+    .nav a {
       text-decoration: none;
       color: #1e3a8a;
       font-weight: 600;
@@ -63,34 +67,38 @@
       transition: background 0.25s ease, color 0.25s ease;
     }
 
-    .nav a:not(#login-btn):first-child {
+    .nav a:first-child {
       border-radius: 12px 0 0 12px;
     }
 
-    .nav a:not(#login-btn):nth-child(4) {
+    .nav a:last-child {
       border-radius: 0 12px 12px 0;
     }
 
-    .nav a:not(#login-btn):hover {
+    .nav a:hover {
       background: #1e3a8a;
       color: #ffffff;
     }
 
+    /* =========== Login Button =========== */
+
     #login-btn {
-      margin-left: 30px;
       background-color: #1e3a8a;
       color: white;
       font-size: 1rem;
       font-weight: 600;
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 12px;
       text-decoration: none;
+      white-space: nowrap;
     }
-    #login-btn:hover{
+
+    #login-btn:hover {
       background-color: #0336c3;
-      transition: 0.3s;
     }
-/* ========== mobile nav =========== */
+
+    /* ========== mobile nav icon =========== */
+
     .menu {
       font-size: 26px;
       cursor: pointer;
@@ -98,13 +106,15 @@
       color: #1e3a8a;
     }
 
+    /* ========== overlay & drawer =========== */
+
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .45);
+      background: rgba(0, 0, 0, 0.45);
       opacity: 0;
       visibility: hidden;
-      transition: .3s;
+      transition: 0.3s;
       z-index: 1500;
     }
 
@@ -121,8 +131,8 @@
       height: 100vh;
       background: #fff;
       padding: 20px;
-      box-shadow: -6px 0 20px rgba(0, 0, 0, .15);
-      transition: right .35s ease;
+      box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
+      transition: right 0.35s ease;
       z-index: 2000;
       display: flex;
       flex-direction: column;
@@ -160,24 +170,6 @@
     .mobile-links a:hover {
       background: #1e3a8a;
       color: white;
-    }
-
-    .mobile-login {
-      margin-top: auto;
-    }
-
-    .mobile-login a {
-      display: block;
-      text-align: center;
-      background: #1e3a8a;
-      color: white;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 18px;
-      text-decoration: none;
-    }
-    .mobile-login a:hover{
-      background-color: #0336c3;
     }
 
     /* ================= HERO ================= */
@@ -223,9 +215,6 @@
       padding: 0 22px;
       font-size: 16px;
       cursor: pointer;
-    }
-    .search-box button:hover{
-      background-color: #0336c3;
     }
 
     /* ================= CATEGORIES ================= */
@@ -318,8 +307,6 @@
       position: absolute;
       width: 1px;
       height: 1px;
-      padding: 0;
-      margin: -1px;
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
     }
@@ -333,6 +320,10 @@
 
       .menu {
         display: block;
+      }
+
+      #login-btn {
+        margin-left: auto;
       }
     }
 
@@ -357,8 +348,9 @@
       <a href="#">Services</a>
       <a href="#">Find Technician</a>
       <a href="#">Become a Technician</a>
-      <a href="login.html" id="login-btn">Login</a>
     </nav>
+
+    <a href="login.html" id="login-btn">Login</a>
 
     <div class="menu" id="menuToggle">☰</div>
   </header>
@@ -376,19 +368,16 @@
       <a href="#">Services</a>
       <a href="#">Find Technician</a>
       <a href="#">Become a Technician</a>
-    </div>
-
-    <div class="mobile-login">
       <a href="login.html">Login</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <h1>বিশ্বাসযোগ্য মিস্ত্রি খুঁজুন<br>আপনার এলাকার!</h1>
+    <h1>বিশ্বাসযোগ্য মিস্ত্রি খুঁজুন<br />আপনার এলাকার!</h1>
     <div class="search-box">
       <label class="sr-only" for="areaInput">Your area</label>
-      <input id="areaInput" type="text" placeholder="Your area">
+      <input id="areaInput" type="text" placeholder="Your area" />
       <button onclick="searchArea()">খুঁজুন</button>
     </div>
   </section>
