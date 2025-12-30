@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Hind Siliguri", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f6f8fb;
+            color: #1f2937;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: #f6f8fb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: #1e3a8a;
+            white-space: nowrap;
+        }
+
+        .check {
+            background: #1e3a8a;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #1e3a8a;
+            font-weight: 600;
+            padding: 10px 18px;
+            background: #e8edff;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        .nav a:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .nav a:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .nav a:hover {
+            background: #1e3a8a;
+            color: #ffffff;
+        }
+
+        #login-btn {
+            background-color: #1e3a8a;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        #login-btn:hover {
+            background-color: #0336c3;
+        }
+
+        .menu {
+            font-size: 26px;
+            cursor: pointer;
+            display: none;
+            color: #1e3a8a;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1500;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: #fff;
+            padding: 20px;
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
+            transition: right 0.35s ease;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .close-btn {
+            font-size: 26px;
+            cursor: pointer;
+            color: #1e3a8a;
+        }
+
+        .mobile-links a {
+            display: block;
+            text-decoration: none;
+            font-size: 18px;
+            color: #1e3a8a;
+            font-weight: 600;
+            padding: 14px 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #f1f5ff;
+        }
+
+        .mobile-links a:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .services-section {
+            padding: 40px 20px;
+            background: #f6f8fb;
+        }
+
+        .services-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1e3a8a;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 🔹 anchor fix */
+        .service-card {
+            text-decoration: none;
+            color: inherit;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 26px 20px;
+            text-align: center;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .nav {
+                display: none;
+            }
+
+            .menu {
+                display: block;
+            }
+
+            #login-btn {
+                margin-left: auto;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <span class="check">✔</span>
+        <span>KORMI</span>
+    </div>
+
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Find Technician</a>
+        <a href="#">Become a Technician</a>
+    </nav>
+
+    <a href="login.html" id="login-btn">Login</a>
+    <div class="menu" id="menuToggle">☰</div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<nav class="mobile-nav" id="mobileMenu">
+    <div class="mobile-header">
+        <strong>KORMI</strong>
+        <span class="close-btn" id="closeMenu">✕</span>
+    </div>
+
+    <div class="mobile-links">
+        <a href="index.html">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Find Technician</a>
+        <a href="#">Become a Technician</a>
+    </div>
+</nav>
+
+<section class="services-section">
+    <h2 class="services-title">আমাদের সার্ভিসসমূহ</h2>
+
+    <div class="services-grid">
+
+        <a href="service.html?type=electrician" class="service-card">
+            <span class="service-icon">⚡</span>
+            <h3>Electrician</h3>
+            <p>বাসা ও অফিসের সকল ইলেকট্রিক কাজ</p>
+        </a>
+
+        <a href="service.html?type=plumber" class="service-card">
+            <span class="service-icon">🚰</span>
+            <h3>Plumber</h3>
+            <p>পানি লিকেজ, পাইপ ও স্যানিটারি সার্ভিস</p>
+        </a>
+
+        <a href="service.html?type=ac" class="service-card">
+            <span class="service-icon">❄️</span>
+            <h3>AC Repair</h3>
+            <p>AC সার্ভিসিং, গ্যাস চার্জ ও রিপেয়ার</p>
+        </a>
+
+        <a href="service.html?type=gas" class="service-card">
+            <span class="service-icon">🔥</span>
+            <h3>Gas Technician</h3>
+            <p>গ্যাস চুলা ও লাইন সংক্রান্ত কাজ</p>
+        </a>
+
+        <a href="service.html?type=appliance" class="service-card">
+            <span class="service-icon">🛠️</span>
+            <h3>Appliance Repair</h3>
+            <p>ফ্রিজ, ওয়াশিং মেশিন ও অন্যান্য যন্ত্র</p>
+        </a>
+
+        <a href="service.html?type=painter" class="service-card">
+            <span class="service-icon">🎨</span>
+            <h3>Painter</h3>
+            <p>ইন্টেরিয়র ও এক্সটেরিয়র পেইন্টিং</p>
+        </a>
+
+    </div>
+</section>
+
+<script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const overlay = document.getElementById("overlay");
+    const closeMenu = document.getElementById("closeMenu");
+
+    menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.add("active");
+        overlay.classList.add("active");
+    });
+
+    closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        overlay.classList.remove("active");
+    });
+
+    overlay.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        overlay.classList.remove("active");
+    });
+</script>
+
+</body>
+</html>
