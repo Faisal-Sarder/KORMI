@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Hind Siliguri", Arial, sans-serif;
+            background: #f6f8fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .tech-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8edff;
+            color: #1e3a8a;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .rating {
+            color: #f59e0b;
+            margin: 6px 0;
+        }
+
+        .btn {
+            display: block;
+            margin-top: 12px;
+            padding: 10px;
+            background: #1e3a8a;
+            color: #fff;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="pageTitle">Service</h1>
+    <div class="tech-grid" id="techList"></div>
+</div>
+
+<script>
+    // 🔹 FRONTEND MOCK (Backend compatible)
+    const technicians = {
+        electrician: [
+            {
+                name: "Rahim Electric",
+                area: "Mirpur",
+                rating: 4.8,
+                level: "Level 3",
+                photo: "https://via.placeholder.com/150"
+            }
+        ],
+        plumber: [
+            {
+                name: "Hasan Plumbing",
+                area: "Dhanmondi",
+                rating: 4.6,
+                level: "Level 3",
+                photo: "https://via.placeholder.com/150"
+            }
+        ],
+        ac: [
+            {
+                name: "Cool AC Service",
+                area: "Banani",
+                rating: 4.7,
+                level: "Level 2",
+                photo: "https://via.placeholder.com/150"
+            }
+        ],
+        gas: [
+            {
+                name: "Safe Gas Tech",
+                area: "Mohammadpur",
+                rating: 4.4,
+                level: "Level 1",
+                photo: "https://via.placeholder.com/150"
+            }
+        ],
+        appliance: [
+            {
+                name: "Safe Appliance Repair",
+                area: "Rampura",
+                rating: 4.5,
+                level: "Level 1",
+                photo: "https://via.placeholder.com/150"
+            }
+        ],
+        painter: [
+            {
+                name: "Pro Painter",
+                area: "Shahbag",
+                rating: 4.6,
+                level: "Level 2",
+                photo: "https://via.placeholder.com/150"
+            }
+        ]
+    };
+
+    const type = new URLSearchParams(window.location.search).get("type");
+    const techList = document.getElementById("techList");
+    const pageTitle = document.getElementById("pageTitle");
+
+    if (!type || !technicians[type]) {
+        pageTitle.innerText = "Service Not Found";
+    } else {
+        pageTitle.innerText = type.toUpperCase() + " Technicians";
+
+        technicians[type].forEach(t => {
+            techList.innerHTML += `
+                <div class="tech-card">
+                    <img src="${t.photo}" alt="${t.name}">
+                    <span class="badge">${t.level}</span>
+                    <h3>${t.name}</h3>
+                    <p>📍 ${t.area}</p>
+                    <div class="rating">⭐ ${t.rating}</div>
+                    <a href="#" class="btn">Call Now</a>
+                </div>
+            `;
+        });
+    }
+</script>
+
+</body>
+</html>

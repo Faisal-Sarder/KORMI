@@ -120,6 +120,7 @@
         #showSignIn {
             font-size: 1rem;
         }
+
         #showSignIn:hover {
             font-size: 1.2rem;
             transition: .3s;
@@ -128,10 +129,12 @@
         #showSignUp {
             font-size: 1rem;
         }
+
         #showSignUp:hover {
             font-size: 1.2rem;
             transition: .3s;
         }
+
         .remember {
             display: flex;
             align-items: center;
@@ -154,6 +157,7 @@
             color: rgb(125, 125, 235);
             cursor: pointer;
         }
+
         .forget button:hover {
             font-size: 0.8rem;
             text-decoration: underline;
@@ -412,9 +416,44 @@
             if (!pass) { errors[1].innerText = "This field is required"; errors[1].style.display = "block"; ok = false; }
             else if (!strongPass(pass)) { errors[1].innerText = "Password must be strong (8+, A-z, 0-9)"; errors[1].style.display = "block"; ok = false; }
 
-            if (ok && rememberMe.checked) { localStorage.setItem("remember", id); }
-            else if (!rememberMe.checked) { localStorage.removeItem("remember"); }
+            if (ok) {
+                // Save remember me
+                if (rememberMe.checked) { localStorage.setItem("remember", id); }
+                else { localStorage.removeItem("remember"); }
+
+                // 🔐 API LOGIN
+                fetch("http://127.0.0.1:8000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        login: id,
+                        password: pass
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.status) {
+                            alert("Login failed");
+                            return;
+                        }
+
+                        // Save token & role
+                        localStorage.setItem("token", data.token);
+                        localStorage.setItem("role", data.role);
+
+                        // Redirect based on role
+                        window.location.href = data.redirect;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Server error");
+                    });
+            }
         }
+
 
         // Sign Up Validation
         document.getElementById("signUpForm").onsubmit = e => {
@@ -429,6 +468,20 @@
             else if (!isEmailOrPhone(id)) { errors[0].innerText = "Invalid email or phone"; errors[0].style.display = "block"; ok = false; }
             if (!pass) { errors[1].innerText = "This field is required"; errors[1].style.display = "block"; ok = false; }
             else if (!strongPass(pass)) { errors[1].innerText = "Password must be strong (8+, A-z, 0-9)"; errors[1].style.display = "block"; ok = false; }
+
+            if (ok) {
+                fetch("http://127.0.0.1:8000/api/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                    body: JSON.stringify({ name: "User", email: id, password: pass, role: "customer" })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.message) { alert(data.message); signUp.classList.remove("active"); signIn.classList.add("active"); }
+                        else { alert("Registration failed"); }
+                    })
+                    .catch(err => { console.error(err); alert("Server error"); });
+            }
         }
     </script>
 
